@@ -74,29 +74,5 @@
 	<!-- 引用CHATGPT API -->
 	<script src="https://api.chatgpt.com/chatgpt.js"></script>
 
-	<script>
-		const chatgpt = new ChatGPT(API_KEY);
-
-		const chatInput = document.querySelector('#chat-input');
-		const chatBody = document.querySelector('#chat-body');
-
-		function sendMessage(message, sender) {
-			const chatMessage = document.createElement('div');
-			chatMessage.classList.add('chat-message');
-			chatMessage.innerHTML = `
-				<div class="avatar"></div>
-				<div class="text ${sender}">${message}</div>
-			`;
-			chatBody.appendChild(chatMessage);
-		}
-
-		document.querySelector('#chat-button').addEventListener('click', () => {
-			const question = chatInput.value;
-			chatInput.value = '';
-			sendMessage(question, 'user');
-			chatgpt.getReply(question).then(reply => {
-				sendMessage(reply, 'bot');
-			});
-		});
-	</script>
+	
 </body
