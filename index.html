@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ChatGPT智能聊天机器人</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #F5F5F5;
+		}
+		h1 {
+			text-align: center;
+			margin-top: 50px;
+		}
+		#chat-container {
+			width: 500px;
+			margin: 50px auto;
+			border: 2px solid #CCCCCC;
+			background-color: #FFFFFF;
+			padding: 20px;
+			border-radius: 10px;
+		}
+		#chat-header {
+			background-color: #EFEFEF;
+			padding: 10px;
+			border-radius: 10px 10px 0 0;
+			text-align: center;
+			font-weight: bold;
+			font-size: 24px;
+		}
+		#chat-body {
+			height: 400px;
+			overflow-y: scroll;
+			padding: 10px;
+		}
+		#chat-footer {
+			padding: 10px;
+			border-radius: 0 0 10px 10px;
+			background-color: #EFEFEF;
+		}
+		#chat-input {
+			width: 100%;
+			border: 1px solid #CCCCCC;
+			border-radius: 5px;
+			padding: 10px;
+			font-size: 16px;
+		}
+		#chat-button {
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+		#chat-button:hover {
+			background-color: #3E8E41;
+		}
+	</style>
+</head>
+<body>
+	<h1>ChatGPT智能聊天机器人</h1>
+	<div id="chat-container">
+		<div id="chat-header">和我们的人工智能助手聊天</div>
+		<div id="chat-body"></div>
+		<div id="chat-footer">
+			<input type="text" id="chat-input" placeholder="输入你的消息...">
+			<button id="chat-button">发送</button>
+		</div>
+	</div>
+	<!-- 引用CHATGPT API KEY -->
+	<script src="config.js"></script>
+
+	<!-- 引用CHATGPT API -->
+	<script src="https://api.chatgpt.com/chatgpt.js"></script>
+
+	<script>
+		const chatgpt = new ChatGPT(API_KEY);
+
+		const chatInput = document.querySelector('#chat-input');
+		const chatBody = document.querySelector('#chat-body');
+
+		function sendMessage(message, sender) {
+			const chatMessage = document.createElement('div');
+			chatMessage.classList.add('chat-message');
+			chatMessage.innerHTML = `
+				<div class="avatar"></div>
+				<div class="text ${sender}">${message}</div>
+			`;
+			chatBody.appendChild(chatMessage);
+		}
+
+		document.querySelector('#chat-button').addEventListener('click', () => {
+			const question = chatInput.value;
+			chatInput.value = '';
+			sendMessage(question, 'user');
+			chatgpt.getReply(question).then(reply => {
+				sendMessage(reply, 'bot');
+			});
+		});
+	</script>
+</body
